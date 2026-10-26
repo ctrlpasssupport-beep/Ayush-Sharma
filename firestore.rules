@@ -1,0 +1,63 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Bootstrapped admin using runtime owner email with email verification
+    function isAdmin() {
+      return isSignedIn() &&
+        request.auth.token.email == "ayushsharma80104@gmail.com" &&
+        request.auth.token.email_verified == true;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow get: if isValidId(userId) && (isOwner(userId) || isAdmin());
+      allow create, update: if isValidId(userId) && isOwner(userId);
+      allow delete: if isAdmin();
+    }
+
+    // Orders placed by customers
+    match /orders/{orderId} {
+      allow get: if isValidId(orderId) && (isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid));
+      allow list: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow create: if isValidId(orderId) && (
+        !isSignedIn() || request.resource.data.userId == request.auth.uid
+      );
+      allow update, delete: if isAdmin();
+    }
+
+    // Public menu items
+    match /menu_items/{itemId} {
+      allow get, list: if true;
+      allow write: if isAdmin();
+    }
+
+    // Public offers & combos
+    match /offers/{offerId} {
+      allow get, list: if true;
+      allow write: if isAdmin();
+    }
+
+    // Site settings
+    match /site_settings/{settingId} {
+      allow get, list: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

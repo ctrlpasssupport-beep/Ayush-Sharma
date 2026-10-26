@@ -1,0 +1,137 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-display: "Josefin Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-cursive: "Nothing You Could Do", cursive;
+  --font-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-gold: #fac564;
+  --color-charcoal: #121618;
+  --color-dark: #0e1113;
+  --color-cream: #ffffff;
+  --color-whatsapp: #25d366;
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Colorlib Pizza Dark & Gold Theme */
+  --gold: #fac564;
+  --dark-bg: #121618;
+  --dark-card: #171b1d;
+  --dark-muted: #1e2225;
+  --dark-surface: #0a0c0d;
+
+  --background: var(--dark-bg);
+  --foreground: #ffffff;
+  --card: var(--dark-card);
+  --card-foreground: #ffffff;
+  --popover: var(--dark-card);
+  --popover-foreground: #ffffff;
+  --primary: var(--gold);
+  --primary-foreground: #121618;
+  --secondary: var(--dark-muted);
+  --secondary-foreground: var(--gold);
+  --muted: var(--dark-muted);
+  --muted-foreground: #a6a6a6;
+  --accent: var(--gold);
+  --accent-foreground: #121618;
+  --destructive: #d94335;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: var(--gold);
+
+  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+  --shadow-cta: 0 8px 25px -6px rgba(250, 197, 100, 0.45);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: #ffffff;
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+@utility font-cursive {
+  font-family: var(--font-cursive);
+}
+
+@utility font-sans {
+  font-family: var(--font-sans);
+}
+
+@utility shadow-card {
+  box-shadow: var(--shadow-card);
+}
+
+@utility price {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--gold);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

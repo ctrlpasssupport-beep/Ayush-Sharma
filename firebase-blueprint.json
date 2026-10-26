@@ -1,0 +1,81 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with genuine Google Account details",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 255 },
+        "displayName": { "type": "string", "maxLength": 100 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer pizza order details",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "customerName": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 20 },
+        "address": { "type": "string", "maxLength": 300 },
+        "total": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "preparing", "out_for_delivery", "completed", "cancelled"] },
+        "notes": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["customerName", "phone", "total", "status", "createdAt"]
+    },
+    "MenuItem": {
+      "title": "MenuItem",
+      "description": "Pizza, burger, drink, or dessert item on the menu",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 100 },
+        "category": { "type": "string", "maxLength": 50 },
+        "prices": { "type": "array" },
+        "note": { "type": "string", "maxLength": 200 },
+        "featured": { "type": "boolean" },
+        "available": { "type": "boolean" },
+        "sort": { "type": "number" }
+      },
+      "required": ["name", "category", "prices"]
+    },
+    "Offer": {
+      "title": "Offer",
+      "description": "Special combo or discount offer",
+      "type": "object",
+      "properties": {
+        "kind": { "type": "string", "enum": ["combo", "deal"] },
+        "title": { "type": "string", "maxLength": 100 },
+        "price": { "type": "number" },
+        "items": { "type": "array" },
+        "text": { "type": "string", "maxLength": 300 },
+        "active": { "type": "boolean" },
+        "sort": { "type": "number" }
+      },
+      "required": ["kind", "title", "active"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Authenticated user profile document"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "PizzaHub customer orders"
+    },
+    "/menu_items/{itemId}": {
+      "schema": "MenuItem",
+      "description": "Menu items catalog"
+    },
+    "/offers/{offerId}": {
+      "schema": "Offer",
+      "description": "Deals and combos"
+    }
+  }
+}

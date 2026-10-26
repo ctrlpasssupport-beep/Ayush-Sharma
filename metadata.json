@@ -1,0 +1,6 @@
+{
+  "name": "PizzaHub",
+  "description": "Subday Pizza (PizzaHub) - Handcrafted pizzas, burgers, shakes and combos in Gurugram with WhatsApp ordering, deals, and party hall booking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
